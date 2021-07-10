@@ -7,4 +7,6 @@
     <string name="hint_detalhes">Detalhes</string>
     <string name="hint_data">Data</string>
     <string name="hint_hora">Hora</string>
+    <string name="text_criar_tarefa">Criar Tarefa</string>
+    <string name="text_cancelar">Cancelar</string>
 </resources>
