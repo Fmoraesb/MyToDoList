@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MyToDoList</string>
+    <string name="tv_tarefas">Tarefas</string>
+    <string name="description_adicionar">Sinal de adição</string>
+    <string name="tb_titulo">Criar Tarefa</string>
+    <string name="hint_titulo">Título</string>
+    <string name="hint_detalhes">Detalhes</string>
+    <string name="hint_data">Data</string>
+    <string name="hint_hora">Hora</string>
+</resources>
