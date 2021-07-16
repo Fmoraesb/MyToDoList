@@ -2,13 +2,17 @@ package com.fernandomoraes.mytodolist.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.fernandomoraes.mytodolist.R
 import com.fernandomoraes.mytodolist.databinding.ItemTaskBinding
 import com.fernandomoraes.mytodolist.model.Task
 
 class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(DiffCallBack()) {
+    var listenerEdit : (Task) -> Unit = {}
+    var listenerDelete : (Task) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -20,11 +24,28 @@ class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(DiffCal
         holder.bind(getItem(position))
     }
 
-    class TaskViewHolder(private val binding: ItemTaskBinding):
+    inner class TaskViewHolder(private val binding: ItemTaskBinding):
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Task) {
             binding.tvTitulo.text = item.titulo
             binding.tvDate.text = "${item.data} ${item.hora}"
+            binding.ivPopupMenu.setOnClickListener {
+                showPopUp(item)
+            }
+        }
+
+        private fun showPopUp(item: Task) {
+            val ivPopupMenu = binding.ivPopupMenu
+            val popupMenu = PopupMenu(ivPopupMenu.context, ivPopupMenu)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_editar -> listenerEdit(item)
+                    R.id.action_deletar -> listenerDelete(item)
+                }
+                return@setOnMenuItemClickListener true
+            }
+            popupMenu.show()
         }
     }
 }

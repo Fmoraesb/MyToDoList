@@ -1,5 +1,6 @@
 package com.fernandomoraes.mytodolist.ui
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fernandomoraes.mytodolist.databinding.ActivityAddTaskBinding
@@ -58,6 +59,7 @@ class AddTaskActivity : AppCompatActivity() {
                 hora = binding.tlHora.text
             )
             TaskDataSource.insertTask(task)
+            setResult(Activity.RESULT_OK)
             finish()
         }
     }
