@@ -3,6 +3,7 @@ package com.fernandomoraes.mytodolist.ui
 import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.fernandomoraes.mytodolist.R
 import com.fernandomoraes.mytodolist.databinding.ActivityAddTaskBinding
 import com.fernandomoraes.mytodolist.datasource.TaskDataSource
 import com.fernandomoraes.mytodolist.extensions.format
@@ -21,6 +22,16 @@ class AddTaskActivity : AppCompatActivity() {
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (intent.hasExtra(TASK_ID)) {
+            val taskId = intent.getIntExtra(TASK_ID, 0)
+            TaskDataSource.findById(taskId)?.let {
+                binding.tlTitulo.text = it.titulo
+                binding.tlDetalhes.text = it.descricao
+                binding.tlData.text = it.data
+                binding.tlHora.text = it.hora
+                binding.btCriar.text = getString(R.string.text_alterar_tarefa)
+            }
+        }
         insertListeners()
     }
 
@@ -56,11 +67,16 @@ class AddTaskActivity : AppCompatActivity() {
                 titulo = binding.tlTitulo.text,
                 descricao = binding.tlDetalhes.text,
                 data = binding.tlData.text,
-                hora = binding.tlHora.text
+                hora = binding.tlHora.text,
+                id = intent.getIntExtra(TASK_ID, 0)
             )
             TaskDataSource.insertTask(task)
             setResult(Activity.RESULT_OK)
             finish()
         }
+    }
+
+    companion object {
+        const val TASK_ID = "task_id"
     }
 }

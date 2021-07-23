@@ -28,7 +28,7 @@ class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(DiffCal
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Task) {
             binding.tvTitulo.text = item.titulo
-            binding.tvDate.text = "${item.data} ${item.hora}"
+            "${item.data} ${item.hora}".also { binding.tvDate.text = it }
             binding.ivPopupMenu.setOnClickListener {
                 showPopUp(item)
             }

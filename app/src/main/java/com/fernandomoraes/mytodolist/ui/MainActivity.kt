@@ -1,5 +1,6 @@
 package com.fernandomoraes.mytodolist.ui
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.rvTasks.adapter = adapter
+        updateList()
         insertListener()
         }
 
@@ -23,20 +26,24 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(Intent(this,AddTaskActivity::class.java),CREATE_TASK)
         }
         adapter.listenerEdit = {
-
+            val intent = Intent(this, AddTaskActivity::class.java)
+            intent.putExtra(AddTaskActivity.TASK_ID, it.id)
+            startActivityForResult(intent,CREATE_TASK)
         }
         adapter.listenerDelete = {
-
+            TaskDataSource.deleteTask(it)
+            updateList()
         }
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CREATE_TASK) {
-            binding.rvTasks.adapter = adapter
-            adapter.submitList(TaskDataSource.getList())
-        }
+        if (requestCode == CREATE_TASK && resultCode == Activity.RESULT_OK) updateList()
+    }
+
+    private fun updateList() {
+        adapter.submitList(TaskDataSource.getList())
     }
 
     companion object {

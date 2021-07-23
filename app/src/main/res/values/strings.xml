@@ -4,10 +4,12 @@
     <string name="description_adicionar">Adicionar Tarefa</string>
     <string name="tb_titulo">Criar Tarefa</string>
     <string name="hint_titulo">Título</string>
-    <string name="hint_detalhes">Detalhes</string>
+    <string name="hint_detalhes">Observação</string>
     <string name="hint_data">Data</string>
     <string name="hint_hora">Hora</string>
     <string name="text_cancelar">Cancelar</string>
     <string name="label_editar">Editar</string>
     <string name="label_deletar">Deletar</string>
+    <string name="data_hora">%1$s %2$s</string>
+    <string name="text_alterar_tarefa">Alterar Tarefa</string>
 </resources>
